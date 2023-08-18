@@ -3140,6 +3140,11 @@ static void drive_machine(conn *c) {
 
         case conn_parse_cmd:
             c->noreply = false;
+            /* example busy delay */
+            printf("Adding artificial delay");
+            for (unsigned i = 0; i < 1000; i++) {
+                __asm__ __volatile__ ("" : "+g" (i) : :);
+            }
             if (c->try_read_command(c) == 0) {
                 /* we need more data! */
                 if (c->resp_head) {
